@@ -34,7 +34,12 @@ def corrupt_examples(model, correct_sequences):
     noise_sequences = []
     weights = []
     for e in correct_sequences:
-        noise_sequence, weight = model.corrupt_example(e)
+        # Douglas: model does not have corrupt_example method
+        #          guess it's a version issue 
+        #          just try a possible method here (not trace yet)
+        #noise_sequence, weight = model.corrupt_example(e)
+        noise_sequence, weight = corrupt_example(model, e)
+
         noise_sequences.append(noise_sequence)
         weights.append(weight)
     return noise_sequences, weights

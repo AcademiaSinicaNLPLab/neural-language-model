@@ -21,8 +21,10 @@ def diagnostics(cnt, model):
     embeddings_debug(model.parameters.embeddings[:100], cnt, "top  100 words, model %s" % model.modelname)
     embeddings_debug(model.parameters.embeddings[model.parameters.vocab_size/2-50:model.parameters.vocab_size/2+50], cnt, "mid  100 words, model %s" % model.modelname)
     embeddings_debug(model.parameters.embeddings[-100:], cnt, "last 100 words, model %s" % model.modelname)
-    weights_debug(model.parameters.hidden_weights.value, cnt, "hidden weights, model %s" % model.modelname)
-    weights_debug(model.parameters.output_weights.value, cnt, "output weights, model %s" % model.modelname)
+
+    # Douglas: get_value() interface changed
+    weights_debug(model.parameters.hidden_weights.get_value(), cnt, "hidden weights, model %s" % model.modelname)
+    weights_debug(model.parameters.output_weights.get_value(), cnt, "output weights, model %s" % model.modelname)
     logging.info(stats())
 
 def visualizedebug(cnt, model, rundir, newkeystr, WORDCNT=500):
@@ -39,14 +41,19 @@ def visualize(cnt, model, rundir, idxs, str):
     """
     Visualize a set of examples using t-SNE.
     """
-    from vocabulary import wordmap, wordform
+    # Douglas: monolingual.vocabulary seems not keep abreast with w2w.vocabulary which supports wordform
+    #           we simply get key strings (wordform) as titles
+    #from vocabulary import wordmap, wordform
+    from vocabulary import wordmap
     PERPLEXITY=30
 
     idxs = [id % model.parameters.embeddings.shape[0] for id in idxs]
     x = model.parameters.embeddings[idxs]
     print x.shape
-    #titles = [`wordmap().str(id)` for id in idxs]
-    titles = [wordform(id) for id in idxs]
+
+    # Douglas: wordform is the key string, for outputing figure
+    titles = [wordmap.str(id) for id in idxs]
+    #titles = [wordform(id) for id in idxs]
 
     import os.path
     filename = os.path.join(rundir, "embeddings.model-%s.-%s-%d.png" % (model.modelname, str, cnt))

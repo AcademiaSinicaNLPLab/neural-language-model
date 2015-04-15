@@ -13,7 +13,8 @@ def _wordmap_filename(name):
 
 wordmap = None
 try:
-    wordmap = cPickle.load(myopen(_wordmap_filename()))
+    # Douglas: python 2.7 cannot ignore parameters
+    wordmap = cPickle.load(myopen(_wordmap_filename("")))
     wordmap.str = wordmap.key
 except: pass
 

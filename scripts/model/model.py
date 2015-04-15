@@ -28,7 +28,9 @@ class Model:
     import hyperparameters
     import miscglobals
     import vocabulary
-    def __init__(self, modelname="", window_size=HYPERPARAMETERS["WINDOW_SIZE"], vocab_size=vocabulary.wordmap().len, embedding_size=HYPERPARAMETERS["EMBEDDING_SIZE"], hidden_size=HYPERPARAMETERS["HIDDEN_SIZE"], seed=miscglobals.RANDOMSEED, initial_embeddings=None, two_hidden_layers=HYPERPARAMETERS["TWO_HIDDEN_LAYERS"]):
+
+    # Douglas: substitute old representation of vocabulary.wordmap()
+    def __init__(self, modelname="", window_size=HYPERPARAMETERS["WINDOW_SIZE"], vocab_size=vocabulary.wordmap.len, embedding_size=HYPERPARAMETERS["EMBEDDING_SIZE"], hidden_size=HYPERPARAMETERS["HIDDEN_SIZE"], seed=miscglobals.RANDOMSEED, initial_embeddings=None, two_hidden_layers=HYPERPARAMETERS["TWO_HIDDEN_LAYERS"]):
         self.modelname = modelname
         self.parameters = Parameters(window_size, vocab_size, embedding_size, hidden_size, seed, initial_embeddings, two_hidden_layers)
         if LBL:

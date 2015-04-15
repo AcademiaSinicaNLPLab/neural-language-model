@@ -3,7 +3,11 @@
 """
 
 from theano import config
-from theano.compile.sandbox import shared
+# Douglas: http://pydoc.net/Python/Theano/0.3.1/theano.compile.sandbox/
+#   warnings.warn("theano.compile.sandbox no longer provides shared, shared_constructor, and pfunc.  They have been moved to theano.compile.", DeprecationWarning)
+# from theano.compile.sandbox import shared
+from theano.compile.sharedvalue import shared
+
 
 import copy
 

@@ -40,8 +40,9 @@ if __name__ == "__main__":
     import sys
     print >> sys.stderr, myyaml.dump(common.dump.vars_seq([hyperparameters, miscglobals]))
 
-    import noise
-    indexed_weights = noise.indexed_weights()
+    # Douglas: unknown, not used
+    #import noise
+    #indexed_weights = noise.indexed_weights()
 
     from rundir import rundir
     rundir = rundir()
@@ -59,10 +60,11 @@ if __name__ == "__main__":
     random.seed(miscglobals.RANDOMSEED)
     numpy.random.seed(miscglobals.RANDOMSEED)
 
+    # Douglas: get idmap
     import vocabulary
 #    logging.info("Reading vocab")
 #    vocabulary.read()
-    
+
     import model
     try:
         print >> sys.stderr, ("Trying to read training state for %s %s..." % (newkeystr, rundir))
@@ -88,6 +90,10 @@ if __name__ == "__main__":
     #validate(0)
     diagnostics.diagnostics(cnt, m)
 #    diagnostics.visualizedebug(cnt, m, rundir)
+    
+    # Douglas: add import, don't know why miss it
+    import corrupt
+
     while 1:
         logging.info("STARTING EPOCH #%d" % epoch)
         for ebatch in get_train_minibatch:
